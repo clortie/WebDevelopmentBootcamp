@@ -1,0 +1,26 @@
+/* Style the h1 */
+h1{
+	text-align: center;
+}
+
+/* Align table */
+table{
+	margin: auto;
+}
+
+/* enlarge box */
+td{
+	padding: 50px;
+}
+
+/* make borders */
+
+.top-bottom{
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+}
+
+.left-right{
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+}
