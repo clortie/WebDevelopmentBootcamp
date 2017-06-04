@@ -28,7 +28,7 @@ Links to my work from each section of the course can be found below.
 <ul>
 <h5><a href="https://github.com/clortie/WebDevelopmentBootcamp/tree/master/HTML">HTML</a></h5>
 <h5><a href="https://github.com/clortie/WebDevelopmentBootcamp/tree/master/CSS">CSS</a></h5>
-<h5>Bootstrap</h5>
+<h5><a href="https://github.com/clortie/WebDevelopmentBootcamp/tree/master/Bootstrap">Bootstrap</a></h5>
 <h5>JavaScript</h5>
 <h5>DOM</h5>
 <h5>Color Game Project</h5>
