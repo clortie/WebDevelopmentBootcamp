@@ -30,8 +30,8 @@ Links to my work from each section of the course can be found below.
 <h5><a href="https://github.com/clortie/WebDevelopmentBootcamp/tree/master/CSS">CSS</a></h5>
 <h5><a href="https://github.com/clortie/WebDevelopmentBootcamp/tree/master/Bootstrap">Bootstrap</a></h5>
 <h5><a href="https://github.com/clortie/WebDevelopmentBootcamp/tree/master/JavaScript">JavaScript</a></h5>
-<h5>DOM</h5>
-<h5>Color Game Project</h5>
+<h5><a href="https://github.com/clortie/WebDevelopmentBootcamp/tree/master/DOM">DOM</a></h5>
+<h5><a href="https://github.com/clortie/WebDevelopmentBootcamp/tree/master/ColorGuessingGame">Color Game Project</a></h5>
 <h5>jQuery</h5>
 <h5>Todo List Projects</h5>
 <h5>Patatap Clone Project</h5>
