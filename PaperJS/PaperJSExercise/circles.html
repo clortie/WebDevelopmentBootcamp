@@ -5,6 +5,10 @@
 		<title>Circles</title>
 		<script type="text/javascript" src="../paper-full.min.js"></script>
 		<script type="text/paperscript" canvas="myCanvas">
+			//triangles array for rotate
+			var triangles = [];
+			//keypress triangles
+			var keyTriangles = [];
 			//use screen.width and screen.height for invariants
 			var maxX = view.size.width;
 			var maxY = view.size.height;
@@ -15,25 +19,39 @@
 			//starting at x=0, y=0, make circles with radius 10
 			for(var x=0;x<maxX;x+=maxX/20){
 				for(var y=0;y<maxY;y+=maxY/20){
-					//create a paper js circle
-					var circle = new Path.Circle({
-    					center: [x,y],
-    					radius: 10
-						});
-					//white outline
-					circle.strokeColor='rgb(255,255,255)';
-					//fill color
-					circle.fillColor='rgb('+r+','+g+',+'+b+')';
+					var triangle = new Path.RegularPolygon({
+						center: [x,y],
+						sides: 3,
+						radius: 20
+					});
+					triangle.rotate(180);
+					triangle.strokeColor = '#ffffff';
+					triangle.fillColor='rgb('+r+','+g+',+'+b+')';
+					triangles.push(triangle);
 					//get new color values. reset(ish) value if greater than 255
 					r>=255 ? r=10 : r+=3;
 					g>=255 ? g=50 : g+=2;
 					b>=255 ? b=90 : b++;
 				}
 			}
+			function onFrame(event) {
+				//rotate background triangles
+				for(var i=0;i<triangles.length;i++){
+					triangles[i].rotate(1);
+				}
+				//change color of keypress triangles
+				for(var i=0;i<keyTriangles.length;i++){
+					keyTriangles[i].fillColor='rgb('+r+','+g+',+'+b+')';
+				}
+				//get new color values. reset(ish) value if greater than 255
+				r>=255 ? r=10 : r++;
+				g>=255 ? g=50 : g++;
+				b>=255 ? b=90 : b++;
+			}
 			function onKeyDown(even){
 				var maxPoint = new Point(view.size.width, view.size.height);
 				var randomPoint = new Point.random();
-				new Path.Circle((maxPoint*randomPoint),40).fillColor="white";
+				keyTriangles.push(new Path.RegularPolygon((maxPoint*randomPoint),3,40));
 			}
 		</script>
 		<link rel="stylesheet" type="text/css" href="circles.css">
