@@ -5,8 +5,6 @@
 		<title>Circles</title>
 		<script type="text/javascript" src="../paper-full.min.js"></script>
 		<script type="text/paperscript" canvas="myCanvas">
-			//array for the circles
-			var circles = [];
 			//use screen.width and screen.height for invariants
 			var maxX = screen.width;
 			var maxY = screen.height;
@@ -26,8 +24,6 @@
 					circle.strokeColor='rgb(255,255,255)';
 					//fill color
 					circle.fillColor='rgb('+r+','+g+',+'+b+')';
-					//push the circle onto the array
-					circles.push(circle);
 					//get new color values. reset(ish) value if greater than 255
 					r>=255 ? r=10 : r+=3;
 					g>=255 ? g=50 : g+=2;
