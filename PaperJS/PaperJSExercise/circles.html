@@ -41,7 +41,8 @@
 				}
 				//change color of keypress triangles
 				for(var i=0;i<keyTriangles.length;i++){
-					keyTriangles[i].fillColor='rgb('+r+','+g+',+'+b+')';
+					keyTriangles[i].fillColor.hue +=1;
+					keyTriangles[i].scale(.98);
 				}
 				//get new color values. reset(ish) value if greater than 255
 				r>=255 ? r=10 : r++;
@@ -49,9 +50,14 @@
 				b>=255 ? b=90 : b++;
 			}
 			function onKeyDown(even){
+				r=Math.random()*255;
+				g=Math.random()*255;
+				b=Math.random()*255;
 				var maxPoint = new Point(view.size.width, view.size.height);
 				var randomPoint = new Point.random();
-				keyTriangles.push(new Path.RegularPolygon((maxPoint*randomPoint),3,40));
+				keyTriangle = new Path.RegularPolygon((maxPoint*randomPoint),3,200);
+				keyTriangle.fillColor='rgb('+r+','+g+',+'+b+')';
+				keyTriangles.push(keyTriangle);
 			}
 		</script>
 		<link rel="stylesheet" type="text/css" href="circles.css">
