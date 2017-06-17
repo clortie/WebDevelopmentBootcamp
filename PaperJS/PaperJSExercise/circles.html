@@ -6,8 +6,8 @@
 		<script type="text/javascript" src="../paper-full.min.js"></script>
 		<script type="text/paperscript" canvas="myCanvas">
 			//use screen.width and screen.height for invariants
-			var maxX = screen.width;
-			var maxY = screen.height;
+			var maxX = view.size.width;
+			var maxY = view.size.height;
 			//rgb color values
 			var r = 0;
 			var g = 100;
@@ -29,6 +29,11 @@
 					g>=255 ? g=50 : g+=2;
 					b>=255 ? b=90 : b++;
 				}
+			}
+			function onKeyDown(even){
+				var maxPoint = new Point(view.size.width, view.size.height);
+				var randomPoint = new Point.random();
+				new Path.Circle((maxPoint*randomPoint),40).fillColor="white";
 			}
 		</script>
 		<link rel="stylesheet" type="text/css" href="circles.css">
