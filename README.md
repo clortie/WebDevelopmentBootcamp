@@ -37,14 +37,4 @@ Links to my work from each section of the course can be found below.
 <h5><a href="https://github.com/clortie/WebDevelopmentBootcamp/tree/master/PatatapClone">Patatap Clone Project</a></h5>
 <h5><a href="https://github.com/clortie/WebDevelopmentBootcamp/tree/master/NodeJS">NodeJS</a></h5>
 <h5><a href="https://github.com/clortie/WebDevelopmentBootcamp/tree/master/NPM">NPM</a></h5>
-<h5>Server Side Frameworks</h5>
-<h5>Express JS</h5>
-<h5>Working With API's</h5>
-<h5>YelpCamp</h5>
-<h5>Databases</h5>
-<h5>RESTful Routing</h5>
-<h5>Data Associations</h5>
-<h5>Authentication</h5>
-<h5>Git and Github</h5>
-<h5>Deploying</h5>
 </ul>
