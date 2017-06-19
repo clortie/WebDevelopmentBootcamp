@@ -35,9 +35,8 @@ Links to my work from each section of the course can be found below.
 <h5><a href="https://github.com/clortie/WebDevelopmentBootcamp/tree/master/jQuery">jQuery</a></h5>
 <h5><a href="https://github.com/clortie/WebDevelopmentBootcamp/tree/master/TodoListProject">Todo List Project</a></h5>
 <h5><a href="https://github.com/clortie/WebDevelopmentBootcamp/tree/master/PatatapClone">Patatap Clone Project</a></h5>
-<h5>Backend Basics</h5>
-<h5>The Command Line</h5>
-<h5>Node JS</h5>
+<h5><a href="https://github.com/clortie/WebDevelopmentBootcamp/tree/master/NodeJS">NodeJS</a></h5>
+<h5><a href="https://github.com/clortie/WebDevelopmentBootcamp/tree/master/NPM">NPM</a></h5>
 <h5>Server Side Frameworks</h5>
 <h5>Express JS</h5>
 <h5>Working With API's</h5>
