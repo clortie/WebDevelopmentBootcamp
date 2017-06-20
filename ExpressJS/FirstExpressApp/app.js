@@ -17,6 +17,21 @@ app.get("/dog", function(req, res){
     res.send("MEOW!!");
 });
 
+//patterns
+app.get("/r/:subredditName",function(req, res){
+    console.log(req.params);
+    res.send("Welcome to the "+req.params.subredditName+" subreddit");
+});
+
+app.get("/r/:subredditName/comments/:id/:title/",function(req, res){
+    res.send("This is the comments page");
+});
+
+// catch all
+app.get("*", function(req, res){
+    res.send("Page not found");
+});
+
 
 
 //Tell Express to listen for requests (start server)
