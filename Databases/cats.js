@@ -1,4 +1,5 @@
 var mongoose = require("mongoose");
+//connect to cat_app db or create and connect
 mongoose.connect("mongodb://localhost/cat_app");
 
 // pattern for cats
