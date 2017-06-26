@@ -5,6 +5,7 @@ var express       = require("express"),
 
 //connect mongoose to db
 mongoose.connect("mongodb://localhost/yelp_camp");
+// verify connection
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
@@ -14,7 +15,8 @@ db.once('open', function() {
 //SCHEMA SETUP
 var campgroundSchema = new mongoose.Schema({
     name:String,
-    image:String
+    image:String,
+    description: String
 });
 
 var Campground = mongoose.model("Campground",campgroundSchema);
@@ -24,11 +26,12 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
 
-// //add two campgounds ONLY FOR FIRST RUN
+//add two campgounds ONLY FOR FIRST RUN
 // Campground.create(
 //     {
 //         name:"Granite Hill",
-//         image:"https://farm1.staticflickr.com/60/215827008_6489cd30c3.jpg"
+//         image:"https://farm1.staticflickr.com/60/215827008_6489cd30c3.jpg",
+//         description:"This is a huge granite hill. No bathrooms, no water. Just granite."
 //     },
 //     function(err, campground){
 //         if(err){
@@ -41,7 +44,8 @@ app.set("view engine", "ejs");
 // Campground.create(
 //     {
 //         name:"Death Valley",
-//         image:"https://img.hipcamp.com/image/upload/c_limit,f_auto,h_1200,q_60,w_1920/v1440478008/campground-photos/csnhvxn0qcki2id5vxnc.jpg"
+//         image:"https://img.hipcamp.com/image/upload/c_limit,f_auto,h_1200,q_60,w_1920/v1440478008/campground-photos/csnhvxn0qcki2id5vxnc.jpg",
+//         description:"Over 99% of visitors have died here during their visit."
 //     },
 //     function(err, campground){
 //         if(err){
@@ -52,17 +56,12 @@ app.set("view engine", "ejs");
 //     }
 //     );
 
-// var campgrounds = [{name: "Salmon Creek", image: "https://img.hipcamp.com/image/upload/c_limit,f_auto,h_1200,q_60,w_1920/v1440478008/campground-photos/csnhvxn0qcki2id5vxnc.jpg"},
-//         {name: "Death Valley", image: "https://img.hipcamp.com/image/upload/c_limit,f_auto,h_1200,q_60,w_1920/v1440478008/campground-photos/csnhvxn0qcki2id5vxnc.jpg"},
-//         {name: "Lover's Cliff", image: "https://img.hipcamp.com/image/upload/c_limit,f_auto,h_1200,q_60,w_1920/v1440478008/campground-photos/csnhvxn0qcki2id5vxnc.jpg"}
-//     ];
-    
-
 
 app.get("/", function(req, res){
     res.render("landing");
 });
 
+// INDEX -- show all campgrounds
 app.get("/campgrounds", function(req, res){
     // res.render("campgrounds", {campgrounds:campgrounds});
     //get all campground from db then render
@@ -70,17 +69,19 @@ app.get("/campgrounds", function(req, res){
         if(err){
             console.log(err);
         }else{
-            res.render("campgrounds", {campgrounds:campgrounds})
+            res.render("index", {campgrounds:campgrounds})
         }
     })
 });
 
+// CREATE -- add new campground to DB
 app.post("/campgrounds",function(req, res){
    // get data from form and add to campgrounds array
    var name = req.body.name;
    var image = req.body.image;
+   var description = req.body.description;
    //create new campground and save to db
-   Campground.create({name:name, image:image},function(err,campground){
+   Campground.create({name:name, image:image, description:description},function(err,campground){
        if(err){
            console.log(err);
        }else{
@@ -89,10 +90,27 @@ app.post("/campgrounds",function(req, res){
    });
 });
 
+// NEW -- show form to create new campground
 app.get("/campgrounds/new", function(req, res){
     res.render("new");
 });
 
+// SHOW -- shows more info about one template 
+app.get("/campgrounds/:id", function(req, res){
+    //find the campground with provided id
+    Campground.findById(req.params.id, function(err, foundCampground){
+       if(err){
+           console.log(err);
+       } else{
+           //render show template with that campground
+           res.render("show", {campground:foundCampground});
+       }
+    });
+});
+
+
+// start server
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("server has started");
 });
+
