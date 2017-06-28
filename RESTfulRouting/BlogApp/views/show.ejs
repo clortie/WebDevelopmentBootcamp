@@ -8,12 +8,21 @@
                     <span><%=blog.created.toDateString()%></span>
                 </div>
                 <div class="description">
-                    <p><%=blog.body%></p>
+                    <p><%-blog.body%></p>
                 </div>
                 <div>
-                    <a class="ui orange basic button" href="/blogs/<%=blog._id%>/edit">Edit</a>
+                    <a class="ui animated button basic orange" tabindex="0" href="/blogs/<%=blog._id%>/edit">
+                                <div class="visible content">Edit</div>
+                                <div class="hidden content"><i class="edit icon"></i></div>
+                    </a>
                     <form id="delete" action="/blogs/<%=blog._id%>?_method=DELETE" method="POST">
-                        <button class="ui red basic button">Delete</button>
+                        <!--<button class="ui red basic button">Delete</button>-->
+                        <div class="ui animated red basic button" tabindex="0">
+                            <div class="visible content">Delete</div>
+                            <div class="hidden content">
+                                <i class="trash icon"></i>
+                            </div>
+                        </div>
                     </form>
                 </div>
         </div>
