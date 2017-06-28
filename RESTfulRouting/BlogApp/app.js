@@ -1,11 +1,16 @@
+/*------------------------------*/
+/*-------- Requirements --------*/
+/*------------------------------*/
 var express       = require("express"),
     app           = express(),
     bodyParser    = require("body-parser"),
     mongoose      = require("mongoose"),
     methodOverride = require("method-override");
 
+/*------------------------------*/
+/*------ Mongoose Config -------*/
+/*------------------------------*/
 
-/*------ MONGOOSE CONFIG -------*/
 //connect mongoose to db  
 mongoose.connect("mongodb://localhost/blog_app");
 // verify connection
@@ -14,6 +19,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log("mongoose connected to db");
 });
+
 //schema setup
 var blogSchema = new mongoose.Schema({
     title:String,
@@ -21,6 +27,7 @@ var blogSchema = new mongoose.Schema({
     body:String,
     created:{type: Date, default: Date.now}
 });
+
 //DB model
 var Blog = mongoose.model("Blog",blogSchema);
 // create a blog
@@ -32,13 +39,20 @@ var Blog = mongoose.model("Blog",blogSchema);
         
 //     });
 
-/*------- APP CONFIG --------*/
+/*------------------------------*/
+/*--------- App Config ---------*/
+/*------------------------------*/
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(methodOverride("_method"));
 
-/* -------- RESTFUL ROUTES -------- */
+/*--------------------------------*/
+/*-------- RESTful Routes --------*/
+/*--------------------------------*/
+
+//ROOT
 app.get("/",function(req,res){
     res.redirect("/blogs");
 });
@@ -71,7 +85,6 @@ app.post("/blogs", function(req, res){
            res.redirect("/blogs");
        }
    });
-   
 });
 
 //SHOW ROUTE
@@ -107,9 +120,23 @@ app.put("/blogs/:id",function(req, res){
    });
 });
 
+//DELETE ROUTE
+app.delete("/blogs/:id",function(req,res){
+   //destroy blog
+  Blog.findByIdAndRemove(req.params.id,function(err){
+      if(err){
+          res.redirect("/blogs");
+      }else{
+          res.redirect("/blogs");
+      }
+  });
+});
 
 
 
+/*------------------------------*/
+/*---------Start Server---------*/
+/*------------------------------*/
 
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("server has started");
