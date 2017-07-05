@@ -6,9 +6,16 @@ var express               = require("express"),
     passportLocalMongoose = require("passport-local-mongoose"),
     User                  = require("./models/user");
     
+// ======================
+// MONGOOSE CONFIG
+// ======================
 
 mongoose.connect("mongodb://localhost/auth_demo_app", {useMongoClient: true});
 
+
+// ======================
+// APP CONFIG
+// ======================
 
 var app = express();
 app.set("view engine", "ejs");
@@ -20,8 +27,17 @@ app.use(require("express-session")({
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+// ======================
+// PASSPORT
+// ======================
+
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+// ======================
+// ROUTES
+// ======================
 
 app.get("/", function(req, res){
    res.render("home"); 
@@ -31,6 +47,9 @@ app.get("/secret",function(req,res){
    res.render("secret"); 
 });
 
+// ======================
+// START SERVER
+// ======================
 
 app.listen(process.env.PORT, process.env.IP,function(){
     console.log("server started...");
