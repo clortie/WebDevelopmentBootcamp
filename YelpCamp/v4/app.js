@@ -4,11 +4,18 @@ var express       = require("express"),
     mongoose      = require("mongoose"),
     Campground    = require("./models/campground"),
     Comment       = require("./models/comment"),
-    seedDB        = require("./seeds");
+    seedDB        = require("./seeds"),
+    passport      = require("passport"),
+    LocalStrategy = require("passport-local"),
+    User          = require("./models/user");
 
-seedDB();
+
 //connect mongoose to db
-mongoose.connect("mongodb://localhost/yelp_camp");
+mongoose.Promise = global.Promise;
+mongoose.connect("mongodb://localhost/yelp_camp"/*, {useMongoClient: true}*/);
+seedDB();
+
+
 // verify connection
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -20,6 +27,18 @@ db.once('open', function() {
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname+"/public"));
+
+// PASSPORT CONFIG
+app.use(require("express-session")({
+    secret: "As I walk through the valley where I harvest my grain, I take a look at my wife and realize she's very plain, but that's just perfect for an Amish like me. You know, I shun fancy things like electricity",
+    resave:false,
+    saveUninitialized:false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser()); 
+passport.deserializeUser(User.deserializeUser());
 
 //ROUTES
 
@@ -109,6 +128,24 @@ app.post("/campgrounds/:id/comments",function(req, res){
    });
 });
 
+
+// AUTH ROUTES
+//show signup form
+app.get("/signup",function(req,res){
+    res.render("signup"); 
+});
+//handle signup
+app.post("/signup",function(req, res){
+    User.register(new User({username:req.body.username}),req.body.password, function(err,user){
+        if(err){
+            console.log(err);
+            return res.render("signup");
+        }
+        passport.authenticate("local")(req,res,function(){
+            res.redirect("/campgrounds");
+        });
+    });
+});
 
 // start server
 app.listen(process.env.PORT, process.env.IP, function(){

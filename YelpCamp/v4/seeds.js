@@ -23,18 +23,23 @@ var data = [
             image:"https://c1.staticflickr.com/9/8704/16594805374_059d08b840_b.jpg",
             description:"THIS IS NOT A CAMPGROUND!!! This is an underwater resort, but it is much better than a campground. Zero bugs, zero dry air, zero oxygen...it'll take your breath away."
     }
-]
+];
 
 function seedDB(){
-    Campground.remove({},function(err){
+    Comment.remove({},function(err){
         if(err){
-         console.log(err);
+            console.log(err);
         }
-        else{
-            console.log("removed campgrounds!");
-        }
-        //add new campgrounds
-        data.forEach(function(seed){
+        console.log("removed comments");
+        Campground.remove({},function(err){
+            if(err){
+                console.log(err);
+            }
+            else{
+                console.log("removed campgrounds!");
+            }
+            //add new campgrounds
+            data.forEach(function(seed){
             Campground.create(seed,function(err,campground){
                 if(err){
                     console.log(err);
@@ -54,8 +59,9 @@ function seedDB(){
                                 console.log("Created new comment");
                             }
                         });
-                }
-            }); 
+                    }
+                }); 
+            });
         });
     });
 }
