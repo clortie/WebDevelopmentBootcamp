@@ -12,7 +12,7 @@ var express       = require("express"),
 
 //connect mongoose to db
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost/yelp_camp"/*, {useMongoClient: true}*/);
+mongoose.connect("mongodb://localhost/yelp_camp", {useMongoClient: true});
 seedDB();
 
 
