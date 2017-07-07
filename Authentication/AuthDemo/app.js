@@ -46,7 +46,7 @@ app.get("/", function(req, res){
    res.render("home"); 
 });
 
-app.get("/secret",function(req,res){
+app.get("/secret",isLoggedIn,function(req,res){
    res.render("secret"); 
 });
 
@@ -74,7 +74,7 @@ app.post("/register",function(req,res){
 //LOGIN ROUTES
 
 app.get("/login",function(req,res){
-   res.render("/login"); 
+   res.render("login"); 
 });
 
 //login through middleware
@@ -84,6 +84,25 @@ app.post("/login",passport.authenticate("local",{
     }),function(req,res){
     //Nothing needed for now
 });
+
+//LOGOUT ROUTES
+
+app.get("/logout",function(req,res){
+   req.logout();
+   res.redirect("/");
+   
+});
+
+// ======================
+// FUNCTIONS
+// ======================
+
+function isLoggedIn(req,res,next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/login");
+}
 
 // ======================
 // START SERVER
