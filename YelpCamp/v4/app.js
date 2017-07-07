@@ -97,7 +97,7 @@ app.get("/campgrounds/:id", function(req, res){
 // COMMENTS ROUTES
 
 //NEW -- form to create comment
-app.get("/campgrounds/:id/comments/new",function(req,res){
+app.get("/campgrounds/:id/comments/new",isLoggedIn,function(req,res){
     Campground.findById(req.params.id,function(err, campground){
         if(err){
             console.log(err);
@@ -108,7 +108,7 @@ app.get("/campgrounds/:id/comments/new",function(req,res){
 });
 
 //CREATE
-app.post("/campgrounds/:id/comments",function(req, res){
+app.post("/campgrounds/:id/comments",isLoggedIn,function(req, res){
    //look up campground using id
    Campground.findById(req.params.id,function(err,campground){
       if(err){
@@ -151,12 +151,25 @@ app.post("/signup",function(req, res){
 app.get("/login",function(req,res){
    res.render("login"); 
 });
+
+//handle login
 app.post("/login",passport.authenticate("local",{
         successRedirect:"/campgrounds",
         failureRedirect:"/login",
     }),function(req,res){
     //Nothing needed for now
 });
+
+//logout route
+app.get("/logout",function(req,res){
+    req.logout();
+    res.redirect("/campgrounds");
+});
+
+// MIDDLEWARE FUNCTIONS
+function isLoggedIn(req,res,next){
+    return req.isAuthenticated() ? next() : res.redirect("/login");
+}
 
 // start server
 app.listen(process.env.PORT, process.env.IP, function(){
