@@ -147,6 +147,17 @@ app.post("/signup",function(req, res){
     });
 });
 
+// show login form
+app.get("/login",function(req,res){
+   res.render("login"); 
+});
+app.post("/login",passport.authenticate("local",{
+        successRedirect:"/campgrounds",
+        failureRedirect:"/login",
+    }),function(req,res){
+    //Nothing needed for now
+});
+
 // start server
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("server has started");
