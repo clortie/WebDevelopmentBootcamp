@@ -16,13 +16,14 @@ router.get("/", function(req, res){
 });
 
 // CREATE -- add new campground to DB
-router.post("/",function(req, res){
+router.post("/",isLoggedIn,function(req, res){
    // get data from form and add to campgrounds array
    var name = req.body.name;
    var image = req.body.image;
    var description = req.body.description;
+   var author = {id:req.body.user._id, username:req.body.user.username};
    //create new campground and save to db
-   Campground.create({name:name, image:image, description:description},function(err,campground){
+   Campground.create({name:name, image:image, description:description,author:author},function(err,campground){
        if(err){
            console.log(err);
        }else{
@@ -32,11 +33,11 @@ router.post("/",function(req, res){
 });
 
 // NEW -- show form to create new campground
-router.get("/new", function(req, res){
+router.get("/new",isLoggedIn, function(req, res){
     res.render("campgrounds/new");
 });
 
-// SHOW -- shows more info about one template 
+// SHOW -- shows more info about one campground 
 router.get("/:id", function(req, res){
     //find the campground with provided id
     Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
@@ -48,5 +49,9 @@ router.get("/:id", function(req, res){
        }
     });
 });
+
+function isLoggedIn(req,res,next){
+    return req.isAuthenticated() ? next() : res.redirect("/login");
+}
 
 module.exports = router;
