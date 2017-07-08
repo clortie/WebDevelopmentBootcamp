@@ -40,6 +40,8 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser()); 
 passport.deserializeUser(User.deserializeUser());
 
+app.use(getCurrentUser);
+
 //ROUTES
 
 app.get("/", function(req, res){
@@ -54,9 +56,9 @@ app.get("/campgrounds", function(req, res){
         if(err){
             console.log(err);
         }else{
-            res.render("campgrounds/index", {campgrounds:campgrounds})
+            res.render("campgrounds/index", {campgrounds:campgrounds});
         }
-    })
+    });
 });
 
 // CREATE -- add new campground to DB
@@ -170,6 +172,12 @@ app.get("/logout",function(req,res){
 function isLoggedIn(req,res,next){
     return req.isAuthenticated() ? next() : res.redirect("/login");
 }
+
+function getCurrentUser(req,res,next){
+    res.locals.currentUser = req.user;
+    next();
+}
+
 
 // start server
 app.listen(process.env.PORT, process.env.IP, function(){
