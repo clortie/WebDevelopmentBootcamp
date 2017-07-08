@@ -40,25 +40,25 @@ function seedDB(){
             }
             //add new campgrounds
             data.forEach(function(seed){
-            Campground.create(seed,function(err,campground){
-                if(err){
-                    console.log(err);
-                }else{
-                    console.log("added campground");
-                    //create comment
-                    Comment.create(
-                        {
-                            text:"This place is gr8!",
-                            author:"Paul"
-                        },function(err,comment){
-                            if(err){
-                                console.log(err);
-                            }else{
-                                campground.comments.push(comment);
-                                campground.save();
-                                console.log("Created new comment");
-                            }
-                        });
+                Campground.create(seed,function(err,campground){
+                    if(err){
+                        console.log(err);
+                    }else{
+                        console.log("added campground");
+                        // //create comment
+                        // Comment.create(
+                        //     {
+                        //         text:"This place is gr8!",
+                        //         author:"Paul"
+                        //     },function(err,comment){
+                        //         if(err){
+                        //             console.log(err);
+                        //         }else{
+                        //             campground.comments.push(comment);
+                        //             campground.save();
+                        //             console.log("Created new comment");
+                        //         }
+                        //     });
                     }
                 }); 
             });
