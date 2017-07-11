@@ -8,6 +8,10 @@ var Neo = new User({
     username:"Neo",
     password:"bootybooty"
 });
+var Paul = new User({
+    username:"Paul",
+    password:"paulpaulbootybooty"
+});
 
 var data = [
     {
@@ -60,7 +64,7 @@ function seedDB(){
                         Comment.create(
                             {
                                 text:"This place is gr8!",
-                                author:{username:"Paul"}
+                                author:{id:Paul,username:"Paul"}
                             },function(err,comment){
                                 if(err){
                                     console.log(err);
