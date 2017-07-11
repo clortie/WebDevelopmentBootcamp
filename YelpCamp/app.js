@@ -2,14 +2,15 @@
 // REQUIREMENTS
 // ===================================
 
-var express       = require("express"),
-    app           = express(),
-    bodyParser    = require("body-parser"),
-    mongoose      = require("mongoose"),
-    seedDB        = require("./seeds"),
-    passport      = require("passport"),
-    LocalStrategy = require("passport-local"),
-    User          = require("./models/user");
+var express            = require("express"),
+    app                = express(),
+    bodyParser         = require("body-parser"),
+    mongoose           = require("mongoose"),
+    methodOverride     = require("method-override"),
+    seedDB             = require("./seeds"),
+    passport           = require("passport"),
+    LocalStrategy      = require("passport-local"),
+    User               = require("./models/user");
 
 
 
@@ -17,9 +18,9 @@ var express       = require("express"),
 // ROUTES
 // ===================================
 
-var commentRoutes    = require("./routes/comments"),
-    campgroundRoutes = require("./routes/campgrounds"),
-    indexRoutes      = require("./routes/index");
+var commentRoutes      = require("./routes/comments"),
+    campgroundRoutes   = require("./routes/campgrounds"),
+    indexRoutes        = require("./routes/index");
 
 
 
@@ -68,6 +69,8 @@ app.use(function(req,res,next){
     res.locals.currentUser = req.user;
     next();
 });
+//method override
+app.use(methodOverride("_method"));
 //use route files
 app.use(indexRoutes);
 app.use("/campgrounds",campgroundRoutes);
