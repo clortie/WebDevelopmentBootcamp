@@ -25,3 +25,14 @@
                 </div>
             </div>
         </nav>
+        
+        <% messages.forEach(function(message,i){ %>
+            <% if(message.length>0){ %>
+                <div class="container">
+                    <div class="alert alert-<%=messageClasses[i]%>" role="alert">
+                        <%=message%>
+                    </div>
+                </div>
+            <% } %>
+        <% }); %>
+        

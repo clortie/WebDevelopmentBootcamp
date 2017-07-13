@@ -7,6 +7,7 @@ var express            = require("express"),
     bodyParser         = require("body-parser"),
     mongoose           = require("mongoose"),
     methodOverride     = require("method-override"),
+    flash              = require("connect-flash"),
     seedDB             = require("./seeds"),
     passport           = require("passport"),
     LocalStrategy      = require("passport-local"),
@@ -58,15 +59,29 @@ app.use(require("express-session")({
     resave:false,
     saveUninitialized:false
 }));
+//connect flash
+app.use(flash());
 //set up passport
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser()); 
 passport.deserializeUser(User.deserializeUser());
-//add get current user for nav bar as middleware
+//add needed vars to routes as middleware
 app.use(function(req,res,next){
     res.locals.currentUser = req.user;
+    res.locals.messages = 
+        [   
+            req.flash("error"),
+            req.flash("success"),
+            req.flash("info")
+        ];
+    res.locals.messageClasses = 
+        [
+            "danger",
+            "success",
+            "info"
+        ];
     next();
 });
 //method override

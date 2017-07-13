@@ -17,12 +17,14 @@ middlewareFunctions.checkCampgroundOwnership = function(req,res,next){
                 if(foundCampground.author.id.equals(req.user._id)){
                     next();
                 }else{
+                    req.flash("error","You don't have permission to do that.");
                     res.redirect("back");
                 }
             }
         });
     }else{
-        res.redirect("back");
+        req.flash("error","You must be logged in to do that.");
+        res.redirect("/login");
     }
 };
 
@@ -31,23 +33,26 @@ middlewareFunctions.checkCommentOwnership = function(req,res,next){
     if(req.isAuthenticated()){
         Comment.findById(req.params.comment_id, function(err, foundComment){
             if(err){
+                req.flash("error","Campground not found.");
                 res.redirect("back");
             }else{
                 //own the comment??
                 if(foundComment.author.id.equals(req.user._id)){
                     next();
                 }else{
+                    req.flash("error","You don't have permission to do that.");
                     res.redirect("back");
                 }
             }
         });
     }else{
-        res.redirect("back");
+        req.flash("error","You must be logged in to do that.");
+        res.redirect("/login");
     }
 };
 
 middlewareFunctions.isLoggedIn = function(req,res,next){
-    return req.isAuthenticated() ? next() : res.redirect("/login");
+    return req.isAuthenticated() ? next() : (req.flash("error","You must be logged in to do that."),res.redirect("/login"));
 };
 
 module.exports = middlewareFunctions;

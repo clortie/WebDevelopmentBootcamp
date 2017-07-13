@@ -28,6 +28,7 @@ router.post("/",middleware.isLoggedIn,function(req, res){
        if(err){
            console.log(err);
        }else{
+           req.flash("success","Added new campground.");
            res.redirect("campgrounds");
        }
    });
@@ -70,6 +71,7 @@ router.put("/:id",middleware.checkCampgroundOwnership,function(req,res){
       if(err){
           res.redirect("/campgrounds");
       } else{
+          req.flash("info","Campground edited.")
           res.redirect("/campgrounds/"+req.params.id);
       }
    });
@@ -82,6 +84,7 @@ router.delete("/:id",middleware.checkCampgroundOwnership,function(req,res){
        if(err){
            res.redirect("/campgrounds");
        } else{
+           req.flash("info","Campground deleted.");
            res.redirect("/campgrounds");
        }
     });
