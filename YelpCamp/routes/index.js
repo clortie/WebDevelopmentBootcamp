@@ -49,7 +49,7 @@ router.get("/login",function(req,res){
 router.post("/login",passport.authenticate("local",{
         successRedirect:"/campgrounds",
         failureRedirect:"/login",
-        badRequestMessage:"Username and/or is incorrect or does not exist.",
+        badRequestMessage:"Username/password is incorrect or does not exist.",
         failureFlash:true
     }),function(req,res){
     //Nothing needed for now

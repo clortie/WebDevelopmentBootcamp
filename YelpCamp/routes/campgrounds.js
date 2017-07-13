@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+var geocoder = require("geocoder");
 var middleware = require("../middleware");
 var Campground = require("../models/campground");
 
@@ -17,19 +18,36 @@ router.get("/", function(req, res){
 
 // CREATE -- add new campground to DB
 router.post("/",middleware.isLoggedIn,function(req, res){
-   // get data from form and add to campgrounds array
+   // get data from form
    var name = req.body.name;
-   var price = "$"+req.body.price+"/night";
+   var price = req.body.price;
    var image = req.body.image;
+   var location = req.body.location;
    var description = req.body.description;
    var author = {id:req.user._id, username:req.user.username};
-   //create new campground and save to db
-   Campground.create({name:name,price:price, image:image, description:description,author:author},function(err,campground){
+   var fieldError = checkFields(name,price,location,image,description,req,res);
+   if(fieldError.length>0){
+       return(fieldError);
+   }
+   geocoder.geocode(location,function(err,data){
        if(err){
            console.log(err);
-       }else{
-           req.flash("success","Added new campground.");
-           res.redirect("campgrounds");
+           req.flash("error","You must provide a valid location.");
+           res.redirect("back");
+       }
+       else{
+           var lat = data.results[0].geometry.location.lat;
+           var lng = data.results[0].geometry.location.lng;
+           location = data.results[0].formatted_address;
+           //create new campground and save to db
+           Campground.create({name:name,price:price, image:image, description:description,author:author, location:location, lat:lat, lng:lng},function(err,campground){
+                if(err){
+                    console.log(err);
+                }else{
+                    req.flash("success","Added new campground.");
+                    res.redirect("campgrounds");
+                }
+            });
        }
    });
 });
@@ -66,16 +84,46 @@ router.get("/:id/edit",middleware.checkCampgroundOwnership,function(req,res){
 
 // UPDATE
 router.put("/:id",middleware.checkCampgroundOwnership,function(req,res){
-   //find and update the correct campground then redirect to show page
-   Campground.findByIdAndUpdate(req.params.id,req.body.updatedData,function(err,updatedCampground){
-      if(err){
-          res.redirect("/campgrounds");
-      } else{
-          req.flash("info","Campground edited.")
-          res.redirect("/campgrounds/"+req.params.id);
-      }
+   var name = req.body.name;
+   var price = req.body.price;
+   var image = req.body.image;
+   var location = req.body.location;
+   var description = req.body.description;
+   var fieldError = checkFields(name,price,location,image,description,req,res);
+   if(fieldError.length>0){
+       return(fieldError);
+   }
+   geocoder.geocode(location,function(err,data){
+       if(err){
+           console.log(err);
+           req.flash("error","You must provide a valid location.");
+           res.redirect("back");
+       }
+       else{
+            var lat = data.results[0].geometry.location.lat;
+            var lng = data.results[0].geometry.location.lng;
+            location = data.results[0].formatted_address;
+            var newData = {
+                name,
+                image,
+                description,
+                price,
+                location:location,
+                lat:lat,
+                lng:lng
+            };
+            //find and update the correct campground then redirect to show page
+            Campground.findByIdAndUpdate(req.params.id,newData,function(err,updatedCampground){
+                if(err){
+                    req.flash("error",err.message);
+                    res.redirect("/campgrounds");
+                } else{
+                    req.flash("info","Campground edited.");
+                    res.redirect("/campgrounds/"+updatedCampground._id);
+                }
+            });
+       }
    });
-   
 });
 
 // DESTROY
@@ -90,7 +138,20 @@ router.delete("/:id",middleware.checkCampgroundOwnership,function(req,res){
     });
 });
 
-
-
+function checkFields(name,price,location,image,description,req,res){
+    var result=[];
+    if(name.length<1){
+        result=[req.flash("error","You must enter a campground name."),res.redirect("back")];
+   }else if(price.length<1){
+        result=[req.flash("error","You must enter a price per night."),res.redirect("back")]; 
+   }else if(location.length<1){
+        result=[req.flash("error","You must enter a location."),res.redirect("back")]; 
+   }else if(image.length<1){
+        result=[req.flash("error","You must enter an image."),res.redirect("back")]; 
+   }else if(description.length<1){
+        result=[req.flash("error","You must enter a description."),res.redirect("back")]; 
+   }
+   return(result);
+}
 
 module.exports = router;

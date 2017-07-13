@@ -17,24 +17,27 @@ router.get("/new",middleware.isLoggedIn,function(req,res){
 
 //CREATE
 router.post("/",middleware.isLoggedIn,function(req, res){
-   //look up campground using id
+   var comment = req.body.comment;
+   if(comment.text.length<1){
+      return(req.flash("error","Comment cannot be empty."),res.redirect("back"));
+   }
    Campground.findById(req.params.id,function(err,campground){
       if(err){
           console.log(err);
           res.redirect("/campgrounds");
       } else{
-         Comment.create(req.body.comment,function(err,comment){
+         Comment.create(comment,function(err,newComment){
             if(err){
                 req.flash("error","Something went wrong.");
                 console.log(err);
             } else{
                 //add username and id to comment
-                comment.author.username=req.user.username;
-                comment.author.id = req.user._id;
+                newComment.author.username=req.user.username;
+                newComment.author.id = req.user._id;
                 //save comment
-                comment.save();
+                newComment.save();
                 //save campground
-                campground.comments.push(comment);
+                campground.comments.push(newComment);
                 campground.save();
                 req.flash("info","Added comment.");
                 res.redirect("/campgrounds/"+campground._id);
@@ -57,7 +60,11 @@ router.get("/:comment_id/edit",middleware.checkCommentOwnership,function(req,res
 
 // UPDATE
 router.put("/:comment_id",middleware.checkCommentOwnership,function(req,res){
-    Comment.findByIdAndUpdate(req.params.comment_id,req.body.comment,function(err,updatedComment){
+    var comment = req.body.comment;
+    if(comment.text.length<1){
+      return(req.flash("error","Comment cannot be empty."),res.redirect("back"));
+    }
+    Comment.findByIdAndUpdate(req.params.comment_id,comment,function(err,updatedComment){
         if(err){
             res.redirect("back");
         }else{
