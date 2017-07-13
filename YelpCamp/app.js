@@ -8,6 +8,7 @@ var express            = require("express"),
     mongoose           = require("mongoose"),
     methodOverride     = require("method-override"),
     flash              = require("connect-flash"),
+    moment             = require("moment"),
     seedDB             = require("./seeds"),
     passport           = require("passport"),
     LocalStrategy      = require("passport-local"),
@@ -61,6 +62,8 @@ app.use(require("express-session")({
 }));
 //connect flash
 app.use(flash());
+//moment
+app.locals.moment = moment;
 //set up passport
 app.use(passport.initialize());
 app.use(passport.session());
