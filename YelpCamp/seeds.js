@@ -16,24 +16,28 @@ var Paul = new User({
 var data = [
     {
             name:"Regular Campground",
+            price:"$12/night",
             image:"https://www.nps.gov/lavo/planyourvisit/images/Lost-Creek-Campground.jpg",
             description:"Come visit our regular campground! Nothing strange happens here...",
             author:{id:Neo, username:"Neo"}
     },
     {
             name:"Snowy Camper",
+            price:"$6.66/night",
             image:"http://adventurejay.com/blog/images/IMG_1214.JPG",
             description:"Come stay in our snowy camper! Marvel as the local wolf pack attemps to break in and feast on your tender flesh.",
             author:{id:Neo, username:"Neo"}
     },
     {
             name:"Desert Sufferage",
+            price:"$15/night",
             image:"http://maxpixel.freegreatpicture.com/static/photo/1x/Red-Rocks-Rugged-Goblin-Desert-Campground-Utah-780108.jpg",
             description:"Love sleeping in blistering heat? Do you enjoy being eaten to death by mosquitos? Come experience the utter frustration of our mosquito netting failing to do it's only function.",
             author:{id:Neo, username:"Neo"}
     },
     {
             name:"Underwater Tomb",
+            price:"$666/night",
             image:"https://c1.staticflickr.com/9/8704/16594805374_059d08b840_b.jpg",
             description:"THIS IS NOT A CAMPGROUND!!! This is an underwater resort, but it is much better than a campground. Zero bugs, zero dry air, zero oxygen...it'll take your breath away.",
             author:{id:Neo, username:"Neo"}

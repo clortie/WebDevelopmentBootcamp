@@ -5,7 +5,6 @@ var Campground = require("../models/campground");
 
 // INDEX -- show all campgrounds
 router.get("/", function(req, res){
-    // res.render("campgrounds", {campgrounds:campgrounds});
     //get all campground from db then render
     Campground.find({},function(err, campgrounds){
         if(err){
@@ -20,11 +19,12 @@ router.get("/", function(req, res){
 router.post("/",middleware.isLoggedIn,function(req, res){
    // get data from form and add to campgrounds array
    var name = req.body.name;
+   var price = "$"+req.body.price+"/night";
    var image = req.body.image;
    var description = req.body.description;
    var author = {id:req.user._id, username:req.user.username};
    //create new campground and save to db
-   Campground.create({name:name, image:image, description:description,author:author},function(err,campground){
+   Campground.create({name:name,price:price, image:image, description:description,author:author},function(err,campground){
        if(err){
            console.log(err);
        }else{
