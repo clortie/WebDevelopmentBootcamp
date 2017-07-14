@@ -32,9 +32,11 @@ var commentRoutes      = require("./routes/comments"),
 
 //connect mongoose to db
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost/yelp_camp", {useMongoClient: true});
+// mongoose.connect("mongodb://localhost/yelp_camp", {useMongoClient: true});
+mongoose.connect("mongodb://clortie:yelpcamppassword@ds157712.mlab.com:57712/clortie_yelp_camp", {useMongoClient: true});
+
 //seed db
-seedDB();
+// seedDB();
 // verify connection
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
