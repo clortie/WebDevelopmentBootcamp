@@ -20,3 +20,23 @@
     width:100%;
 }
 
+.row{
+    overflow: hidden; 
+}
+
+
+.negative{
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+}
+@media (min-width:768px){
+    .thumbnail.thumbnail-index img{
+    height:200px;
+    width:100%;
+    }
+}
+
+.user-form{
+    width: 30%; 
+    margin: 25px auto;
+}
