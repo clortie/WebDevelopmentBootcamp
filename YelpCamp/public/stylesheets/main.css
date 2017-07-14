@@ -5,6 +5,9 @@
 .thumbnail {
     padding: 0;
 }
+.thumbnail.show-thumbnail{
+    margin-top:10px;
+}
 
 .thumbnail .caption-full {
     padding:9px;
@@ -18,6 +21,7 @@
 #map{
     height:400px;
     width:100%;
+    margin-bottom:10px;
 }
 
 .row{
@@ -40,3 +44,9 @@
     width: 30%; 
     margin: 25px auto;
 }
+
+.search-bar{
+    width:210px;
+    height:35px;
+}
+
