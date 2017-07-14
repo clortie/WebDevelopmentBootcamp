@@ -21,6 +21,8 @@ The bootcamp covered the following topics:
 <li>Authentication</li>
 <li>PassportJS</li>
 <li>Authorization</li>
+<li>Mongoose</li>
+<li>...and more</li>
 </ul>
 
 Links to my work from each section of the course can be found below. The final project, Yelpcamp, can be viewed here:(*comingsoon*).
