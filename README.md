@@ -1,7 +1,7 @@
 # WebDevelopmentBootcamp
 Exercises and Projects
 This repo contains all the exercises and projects I completed as I worked through the <a href="https://www.udemy.com/the-web-developer-bootcamp/learn/v4/overview">Web Developer Bootcamp</a>.</br>
-The bootcamp taught the following topics:
+The bootcamp covered the following topics:
 <ul>
 <li>HTML5</li>
 <li>CSS3</li>
@@ -14,15 +14,16 @@ The bootcamp taught the following topics:
 <li>NodeJS</li>
 <li>NPM</li>
 <li>ExpressJS</li>
-<li>REST</li>
+<li>RESTful Routing</li>
 <li>MongoDB</li>
+<li>Heroku</li>
 <li>Database Associations</li>
 <li>Authentication</li>
 <li>PassportJS</li>
 <li>Authorization</li>
 </ul>
 
-Links to my work from each section of the course can be found below.
+Links to my work from each section of the course can be found below. The final project, Yelpcamp, can be viewed here:(*comingsoon*).
 
 <h4>Sections:</h4>
 <ul>
