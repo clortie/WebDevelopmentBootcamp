@@ -6,14 +6,30 @@ var Campground = require("../models/campground");
 
 // INDEX -- show all campgrounds
 router.get("/", function(req, res){
-    //get all campground from db then render
-    Campground.find({},function(err, campgrounds){
-        if(err){
-            console.log(err);
-        }else{
-            res.render("campgrounds/index", {campgrounds:campgrounds,page:"campgrounds"});
-        }
-    });
+    //if there is a search term
+    if(req.query.search){
+        const regex = new RegExp(escapreRegex(req.query.search),"gi");
+        Campground.find({name:regex},function(err, campgrounds){
+            if(err){
+                console.log(err);
+            }else{
+                var noMatch;
+                if(campgrounds.length<1){
+                    noMatch="No campgrounds match that query, please try again.";
+                }
+                res.render("campgrounds/index",{campgrounds:campgrounds, noMatch:noMatch});
+            }
+        });
+    }else{
+        //get all campground from db then render
+        Campground.find({},function(err, campgrounds){
+            if(err){
+                console.log(err);
+            }else{
+                res.render("campgrounds/index", {campgrounds:campgrounds, noMatch:null});
+            }
+        });
+    }
 });
 
 // CREATE -- add new campground to DB
@@ -153,5 +169,9 @@ function checkFields(name,price,location,image,description,req,res){
    }
    return(result);
 }
+
+function escapreRegex(text){
+    return text.replace(/[=[\]{}()*+?.,\\^$|#\x]/g,"\\$&");
+};
 
 module.exports = router;
