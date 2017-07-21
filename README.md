@@ -25,7 +25,7 @@ The bootcamp covered the following topics:
 <li>...and more</li>
 </ul>
 
-Links to my work from each section of the course can be found below. The final project, Yelpcamp, can be viewed <a href="http://calvinlortie.com/apps/yelpcamp">here</a>.
+Links to my work from each section of the course can be found below. The final project, Yelpcamp, can be viewed <a href="http://www.calvinlortie.com/apps/yelpcamp/">here</a>.
 
 <h4>Sections:</h4>
 <ul>
